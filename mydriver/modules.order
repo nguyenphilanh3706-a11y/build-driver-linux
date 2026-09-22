@@ -1,0 +1,7 @@
+/home/quocanh/mydriver/smartled_driver.o
+/home/quocanh/mydriver/sound_driver.o
+/home/quocanh/mydriver/fake_device.o
+/home/quocanh/mydriver/i2s_codec_driver.o
+/home/quocanh/mydriver/hdmi_audio_driver.o
+/home/quocanh/mydriver/mic_audio_driver.o
+/home/quocanh/mydriver/speaker_audio_driver.o
