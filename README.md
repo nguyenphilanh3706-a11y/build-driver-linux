@@ -3,7 +3,9 @@
 This repository focuses on three areas of Linux device driver development:
 
 - **Graphics / Display:** I²C OLED display control and graphics rendering.
+[Link the Oled Display Driver Demo Video](https://youtu.be/ptf8MbYmHf4)
 - **Sound:** I²S digital audio communication and Linux audio subsystem integration.
+[Link the I2S Sound Driver Demo Video](https://youtu.be/K5VWboX7QfQ)
 - **Block Device:** USB Mass Storage connectivity, data transfer, and storage performance benchmarking.
 
 The project combines Linux kernel concepts, hardware-level communication, driver configuration, userspace applications, and experimental performance measurements.
