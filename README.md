@@ -122,13 +122,6 @@ I²S (Inter-IC Sound) is a serial interface designed for digital audio data tran
 
 A typical I²S connection uses:
 
-- **BCLK (Bit Clock):** Synchronizes the transfer of individual data bits.
-- **LRCLK / WS (Left-Right Clock / Word Select):** Identifies the audio channel or word boundary.
-- **SD (Serial Data):** Carries digital audio samples.
-- **MCLK (Master Clock):** An optional master clock required by some audio peripherals.
-
-The exact signals and clocking requirements depend on the audio device and the selected operating mode.
-
 On Linux, audio integration commonly involves:
 
 - **ALSA (Advanced Linux Sound Architecture):** The Linux audio framework.
@@ -172,14 +165,6 @@ The primary goals are to understand the USB storage software stack, verify stora
 
 USB Mass Storage Class (MSC) defines a standard mechanism for communicating with storage devices over USB.
 
-A typical Linux storage path involves:
-
-- **USB Core:** Handles USB device discovery, enumeration, and driver binding.
-- **USB Mass Storage driver:** Commonly `usb-storage`, which supports applicable USB mass-storage protocols.
-- **SCSI subsystem:** Provides storage command handling for devices using the relevant SCSI command interfaces.
-- **Linux Block Layer:** Exposes storage as block devices and coordinates block I/O requests.
-- **Filesystem layer:** Allows applications to access files through a mounted filesystem.
-
 A typical data path is:
 
 `Application → Filesystem → Block Layer → SCSI → USB Storage Driver → USB Device`
@@ -194,12 +179,9 @@ The storage module will aim to:
 
 - Connect a USB storage device through the supported USB OTG configuration.
 - Verify device enumeration and driver binding.
-- Inspect kernel logs and USB device information.
 - Identify the resulting block device and its partitions.
-- Mount and unmount a supported filesystem.
 - Perform file read and write operations.
 - Investigate block I/O behavior and storage buffering.
-- Measure sequential and random read/write performance.
 - Compare performance across different transfer sizes and workloads.
 - Document USB connectivity limitations and the effect of the hardware configuration.
 
