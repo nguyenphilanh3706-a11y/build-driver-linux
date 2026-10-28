@@ -3,6 +3,10 @@
 Target: Raspberry Pi 5 + 1.3 inch 128x64 SH1106 OLED over I2C.
 Default I2C address: 0x3c.
 
+## Demo Video
+
+[![Watch the demo](https://img.youtube.com/vi/ptf8MbYmHf4/0.jpg)](https://youtu.be/ptf8MbYmHf4)
+
 ## Wiring
 
 OLED | Raspberry Pi 5
