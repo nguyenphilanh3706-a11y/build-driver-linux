@@ -1,0 +1,40 @@
+[  535.375198] usbblk: loading out-of-tree module taints kernel.
+[  535.379900] usbblk 1-1:1.0: usbblk: bound. bulk-in 0x81 (512 B), bulk-out 0x02 (512 B)
+[  535.381143] usbcore: registered new interface driver usbblk
+[  695.120090] usbcore: deregistering interface driver usbblk
+[  695.120204] usbblk 1-1:1.0: usbblk: disconnected
+[  732.661255] usbblk 1-1:1.0: usbblk: bound. bulk-in 0x81 (512 B), bulk-out 0x02 (512 B)
+[  732.662413] usbblk 1-1:1.0: usbblk: INQUIRY type=0 vendor='Kingston' product='DataTraveler 3.0' rev='0000'
+[  732.662649] usbblk 1-1:1.0: usbblk: capacity 121077760 sectors x 512 B = 59120 MiB
+[  732.665121] usbcore: registered new interface driver usbblk
+[ 1052.630009] usbcore: deregistering interface driver usbblk
+[ 1052.630141] usbblk 1-1:1.0: usbblk: disconnected
+[ 1175.268377] usbblk 1-1:1.0: usbblk: bound. bulk-in 0x81 (512 B), bulk-out 0x02 (512 B)
+[ 1175.269170] usbblk 1-1:1.0: usbblk: INQUIRY type=0 vendor='Kingston' product='DataTraveler 3.0' rev='0000'
+[ 1175.269431] usbblk 1-1:1.0: usbblk: capacity 121077760 sectors x 512 B = 59120 MiB
+[ 1175.283781]  usbblk0: p1
+[ 1175.284604] usbblk 1-1:1.0: usbblk: /dev/usbblk0 created (read-only)
+[ 1175.284897] usbcore: registered new interface driver usbblk
+[ 1532.487271] usbcore: deregistering interface driver usbblk
+[ 1532.498950] usbblk 1-1:1.0: usbblk: disconnected
+[ 1544.301235] usbblk 1-1:1.0: usbblk: bound. bulk-in 0x81 (512 B), bulk-out 0x02 (512 B)
+[ 1544.302243] usbblk 1-1:1.0: usbblk: INQUIRY type=0 vendor='Kingston' product='DataTraveler 3.0' rev='0000'
+[ 1544.302511] usbblk 1-1:1.0: usbblk: capacity 121077760 sectors x 512 B = 59120 MiB
+[ 1544.306226]  usbblk0: p1
+[ 1544.316732] usbblk 1-1:1.0: usbblk: /dev/usbblk0 created (read-only)
+[ 1544.317054] usbcore: registered new interface driver usbblk
+[ 3348.670096] usbcore: deregistering interface driver usbblk
+[ 3348.684381] usbblk 1-1:1.0: usbblk: disconnected
+[ 3355.265290] usbblk 1-1:1.0: usbblk: bound. bulk-in 0x81 (512 B), bulk-out 0x02 (512 B)
+[ 3355.266400] usbblk 1-1:1.0: usbblk: INQUIRY type=0 vendor='Kingston' product='DataTraveler 3.0' rev='0000'
+[ 3355.266630] usbblk 1-1:1.0: usbblk: capacity 121077760 sectors x 512 B = 59120 MiB
+[ 3355.270256]  usbblk0: p1
+[ 3355.272849] usbblk 1-1:1.0: usbblk: /dev/usbblk0 created (read-only)
+[ 3355.273190] usbcore: registered new interface driver usbblk
+[ 4325.816135] usbblk 1-1:1.0: usbblk: disconnected
+NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
+loop0         7:0    0  426M  0 loop 
+mmcblk0     179:0    0 29.3G  0 disk 
+├─mmcblk0p1 179:1    0  512M  0 part /boot/firmware
+└─mmcblk0p2 179:2    0 28.8G  0 part /
+zram0       254:0    0  426M  0 disk [SWAP]

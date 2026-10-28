@@ -1,0 +1,7 @@
+obj-m += i2sdemo.o
+all:
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+	dtc -@ -I dts -O dtb -o i2sdemo.dtbo i2sdemo-overlay.dts
+clean:
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+	rm -f i2sdemo.dtbo

@@ -1,0 +1,19 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "brcm,bcm2712";
+
+    fragment@0 {
+        target = <&i2c1>;
+        __overlay__ {
+            status = "okay";
+
+            htn_oled: oled@3c {
+                compatible = "htn,sh1106-fb";
+                reg = <0x3c>;
+                status = "okay";
+            };
+        };
+    };
+};

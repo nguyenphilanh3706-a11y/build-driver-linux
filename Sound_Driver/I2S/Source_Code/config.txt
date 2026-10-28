@@ -1,0 +1,3 @@
+# I2S MAX98357A
+#dtoverlay=max98357a,no-sdmode
+dtoverlay=i2sdemo
