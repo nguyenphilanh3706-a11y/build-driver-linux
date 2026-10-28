@@ -7,6 +7,7 @@ This repository focuses on three areas of Linux device driver development:
 - **Sound:** I²S digital audio communication and Linux audio subsystem integration.
 [Link the I2S Sound Driver Demo Video](https://youtu.be/K5VWboX7QfQ)
 - **Block Device:** USB Mass Storage connectivity, data transfer, and storage performance benchmarking.
+[Link the USB storage results](https://drive.google.com/drive/folders/11LNJn7oDkBP92Xn2QcRK8l40AHrXVGwe)
 
 The project combines Linux kernel concepts, hardware-level communication, driver configuration, userspace applications, and experimental performance measurements.
 
@@ -20,13 +21,9 @@ The main objective is to understand how Linux communicates with peripheral hardw
 
 The project aims to:
 
-- Study the Linux device driver architecture and the relationship between hardware, kernel subsystems, device drivers, and userspace applications.
 - Understand hardware communication protocols, including I²C, I²S, and USB.
 - Explore existing Linux kernel drivers and determine when to configure, extend, or implement a driver.
 - Develop practical applications that interact with peripheral devices through appropriate Linux interfaces.
-- Investigate kernel configuration, Device Tree, module compilation, deployment, debugging, and runtime testing.
-- Evaluate system performance using measurable parameters such as transfer speed, latency, update time, and resource utilization.
-- Document implementation procedures, hardware configurations, test cases, experimental results, and technical limitations.
 
 ### 1.2 Project Scope
 
@@ -34,13 +31,11 @@ The project is divided into three independent development modules.
 
 | Module | Hardware / Interface | Primary Objective |
 |---|---|---|
-| Display Driver | 1.3-inch OLED over I²C | Display control, graphics rendering, and update performance |
+| Display Driver | 1.3-inch OLED over I²C | Display control and graphics rendering |
 | Sound Driver | I²S audio interface | Digital audio communication and ALSA/ASoC integration |
 | Block Device Driver | USB Mass Storage | Device detection, data access, and storage performance evaluation |
 
 The implementation will prioritize understanding the existing Linux driver architecture before introducing custom kernel-level code.
-
-Not every module necessarily requires a completely new kernel driver. Where Linux already provides a suitable driver, the work may focus on driver configuration, hardware integration, userspace interfaces, source-code analysis, or targeted extensions.
 
 ---
 
@@ -55,7 +50,7 @@ The exact board revision, peripheral connections, and available interfaces must 
 Planned peripheral devices:
 
 - **OLED display:** 1.3-inch I²C OLED module, commonly available with SH1106 controllers.
-- **Digital audio:** An I²S-compatible DAC (PCM), audio codec.
+- **Digital audio:** An I²S-compatible DAC (PCM), MAX98357A I2S digital audio amplifier.
 - **USB storage:** A USB flash drive or other USB Mass Storage Class-compatible device, connected through an appropriate USB OTG arrangement.
 
 The hardware configuration must identify the exact controller or peripheral model, power requirements, signal connections, and required adapters.
@@ -89,18 +84,13 @@ I²C (Inter-Integrated Circuit) is a synchronous serial communication protocol c
 
 The Linux I²C subsystem provides APIs and driver infrastructure for communicating with I²C devices. A display driver can use these interfaces to send controller commands and display data.
 
-The implementation must distinguish between:
-
-- **Control commands:** Configure the display, addressing mode, contrast, orientation, and display state.
-- **Display data:** Transfer pixel or bitmap data to the display controller.
-- **Framebuffer representation:** Maintain an in-memory representation of the image to be displayed.
-- **Display update:** Transfer full-screen or partial-screen changes to the controller.
-
 A 128 × 64 monochrome framebuffer using one bit per pixel requires:
 
 `128 × 64 × 1 / 8 = 1,024 bytes`
 
 This is the size of the pixel buffer, not necessarily the total amount of data transferred over I²C. Actual transfer size depends on the update strategy, controller protocol, addressing commands, and driver implementation.
+
+Framebuffer support is not automatically required for every I²C OLED display. The selected architecture must match the project's objectives and the capabilities of the existing Linux kernel driver.
 
 ### 3.3 Planned Features
 
@@ -113,30 +103,8 @@ The display module will aim to support:
 - Rendering text and simple bitmap images.
 - Updating the entire screen.
 - Updating selected regions when supported by the controller and implementation.
-- Reusable display functions for other applications.
-- Error handling for unsuccessful I²C transactions.
-- Performance measurements for common drawing operations.
 
-These function declarations represent a proposed interface. Their implementation and error-handling conventions will be defined during development.
-
-### 3.4 Driver Architecture
-
-The implementation will investigate the appropriate Linux interface for the selected OLED controller.
-
-Possible approaches include:
-
-1. **Userspace I²C access:** Use an available I²C device interface for initial hardware verification and prototyping.
-2. **Linux kernel I²C driver:** Implement or extend a kernel driver when custom kernel-level behavior is required.
-3. **Framebuffer integration:** Add a framebuffer-compatible interface if applications need to render graphics through `/dev/fb0`.
-4. **Existing subsystem integration:** Evaluate an existing driver or graphics interface before developing a new implementation.
-
-Framebuffer support is not automatically required for every I²C OLED display. The selected architecture must match the project's objectives and the capabilities of the existing Linux kernel driver.
-
-### 3.5 Performance Evaluation
-
-Tests should include individual pixels, text rendering, geometric shapes, partial updates, and full-screen updates.
-
-For meaningful comparisons, each test must record the display controller, buffer size, update strategy, number of iterations, and measurement method.
+These function declarations represent a proposed interface. 
 
 ---
 
@@ -175,12 +143,8 @@ The sound module will aim to:
 
 - Identify the I²S controller available on the selected Raspberry Pi Zero model.
 - Configure the required hardware description and audio components.
-- Investigate the existing CPU-side I²S driver and codec driver.
 - Register and verify the audio device through the Linux audio subsystem.
 - Test playback and, if supported by the hardware, audio capture.
-- Verify supported sample rates, channel counts, and sample formats.
-- Investigate buffer management and audio streaming behavior.
-- Record configuration errors, underruns, and other relevant runtime failures.
 
 ### 4.4 Driver Architecture
 
@@ -193,21 +157,6 @@ The actual driver components depend on the hardware configuration.
 Development may involve Device Tree configuration, existing kernel driver configuration, codec integration, or a custom ASoC component where justified.
 
 A new I²S controller driver will not be necessary if the selected controller is already supported by the Linux kernel.
-
-### 4.5 Performance Evaluation
-
-| Metric | Description |
-|---|---|
-| Sample rate | Number of audio samples processed per second |
-| Audio format | Sample representation and bit depth |
-| Channel configuration | Mono, stereo, or other supported layouts |
-| Playback stability | Occurrence of underruns or interruptions |
-| Audio latency | Delay through the configured audio path |
-| CPU utilization | Processor usage during audio streaming |
-
-Testing will record the audio peripheral, driver configuration, sample format, buffer parameters, and test duration.
-
-Latency measurements must distinguish between application buffering, software processing, and end-to-end audio latency where the available measurement equipment permits.
 
 ---
 
@@ -254,52 +203,7 @@ The storage module will aim to:
 - Compare performance across different transfer sizes and workloads.
 - Document USB connectivity limitations and the effect of the hardware configuration.
 
-### 5.4 Driver Development Strategy
-
-The Linux kernel already supports many USB Mass Storage devices. Therefore, this module will first investigate the existing implementation rather than automatically replacing it with a custom driver.
-
-The work may include:
-
-1. Examining USB device descriptors and enumeration.
-2. Identifying the bound storage driver.
-3. Tracing the path from USB requests to block I/O.
-4. Configuring the kernel and relevant modules.
-5. Building userspace test utilities and benchmarking scripts.
-6. Investigating targeted driver modifications only when a specific technical requirement justifies them.
-
-This approach provides practical experience with the Linux storage stack without duplicating functionality that the kernel already provides.
-
-### 5.5 Performance Evaluation
-
-| Metric | Description |
-|---|---|
-| Sequential read throughput | Data read per second during sequential access |
-| Sequential write throughput | Data written per second during sequential access |
-| Random read/write performance | Performance under non-sequential access |
-| IOPS | Input/output operations per second |
-| Latency | Time required to complete an I/O operation |
-| CPU utilization | Processor usage during storage activity |
-| Transfer-size sensitivity | Performance changes with different request sizes |
-
-Performance tests will record the USB storage device, USB connection mode, filesystem, mount options, transfer size, queue settings where relevant, and benchmark configuration.
-
-The project will distinguish cached performance from direct or otherwise controlled I/O measurements where appropriate.
-
-**Data safety:** Write benchmarks must use a dedicated test file on the mounted test device. Destructive tests against the wrong block device can permanently erase data.
-
----
-
-## 6. Cross-Module Performance Evaluation
-
-- Define each test case before collecting results.
-- Record hardware and software configurations.
-- Use consistent test conditions when comparing implementations.
-- Repeat tests and report average values; include variation or percentiles where useful.
-- Separate initialization overhead from steady-state performance.
-- Record errors and failed operations rather than reporting only successful runs.
-- Preserve test scripts and raw results so that experiments can be reproduced.
-
-## 7. Future Improvements
+## 6. Future Improvements
 
 Possible extensions include:
 
@@ -314,7 +218,7 @@ Future work will be selected based on hardware support, available development ti
 
 ---
 
-## 8. References
+## 7. References
 
 The following official resources provide background information for the project:
 
